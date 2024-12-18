@@ -36,7 +36,7 @@ export const updateRoom = async (req, res, next) => {
   }
 };
 
-export const getroom = async (req, res, next) => {
+export const getRoom = async (req, res, next) => {
   try {
     const room = await Room.findById(req.params.id); //find hotel by id
     res.status(200).json(room); //200 ok if successfull return hotel
