@@ -10,7 +10,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/icons-material": "^6.2.0",
-    "@mui/material": "^6.2.0",
+    "@mui/material": "^6.2.1",
     "@mui/system": "^6.2.0",
     "@mui/x-date-pickers": "^7.23.2",
     "@testing-library/jest-dom": "^5.14.1",
@@ -21,8 +21,9 @@
     "react": "^19.0.0",
     "react-date-range": "^2.0.1",
     "react-dom": "^19.0.0",
+    "react-is": "^19.0.0",
     "react-router-dom": "^7.0.2",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
