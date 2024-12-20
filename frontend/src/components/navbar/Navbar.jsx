@@ -14,9 +14,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
-const navItems = ['Register', 'Login'];
+const navItems = [
+  { name: 'Register', path: '/register' },
+  { name: 'Login', path: '/login' }
+];
 
 function Navbar(props) {
   const { window } = props;
@@ -28,16 +33,24 @@ function Navbar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        PATH way IN
-      </Typography>
+      <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <AcUnitIcon sx={{ fontSize: 50, color: 'primary.main', mt: 2 }} />
+        <Typography variant="h6" sx={{ my: 2 }}>
+          PATH way IN
+        </Typography>
+      </Link>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
+          <ListItem key={item.name} disablePadding>
+            <Link
+              to={item.path}
+              style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}
+            >
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
@@ -60,18 +73,27 @@ function Navbar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
-            PATH way IN
-          </Typography>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
+            <AcUnitIcon sx={{ fontSize: 50 , color: 'white',mt:2, }} />
+            <Typography 
+              variant="h6"
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              PATH way IN
+            </Typography>
+          </Link>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
+              <Link
+                key={item.name}
+                to={item.path}
+                style={{ textDecoration: 'none' }}
+              >
+                <Button sx={{ color: '#fff' }}>
+                  {item.name}
+                </Button>
+              </Link>
             ))}
           </Box>
         </Toolbar>
@@ -83,7 +105,7 @@ function Navbar(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
@@ -95,17 +117,12 @@ function Navbar(props) {
       </nav>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-        
       </Box>
     </Box>
   );
 }
 
 Navbar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 
