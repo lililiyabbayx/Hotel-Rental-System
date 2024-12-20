@@ -1,6 +1,7 @@
 import express from "express";
 import { verifyAdmin } from "../utils/verifyToken.js";
 
+<<<<<<< HEAD
 
 import { createRoom,
         deleteRoom,
@@ -11,6 +12,19 @@ import { createRoom,
 const router = express.Router();
 //create :
 // localhost:5500/api/hotels
+=======
+import {
+  createRoom,
+  deleteRoom,
+  getRooms,
+  getRoom,
+  updateRoom,
+} from "../controllers/room.js";
+
+const router = express.Router();
+//create :
+// localhost:5500/api/hot
+>>>>>>> 0efbc60d9029f89e68616652c6c5db7bca99dd5a
 router.post("/:hotelid", verifyAdmin, createRoom);
 
 // update :
