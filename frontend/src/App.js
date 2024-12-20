@@ -10,7 +10,7 @@ function App() {
         <Route path="/" element={<Home />} /> {/* Home page*/}
         <Route path="/hotels" element={<List />} />{" "}
         {/* all hotels list down page*/}
-        <Route path="/hotels/:id" element={<Hotel />} /> {/* each hotel page*/}
+        <Route path="/hotel/:id" element={<Hotel />} /> {/* each hotel page*/}
       </Routes>
     </BrowserRouter>
   );

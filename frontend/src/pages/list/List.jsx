@@ -1,30 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Box, Button, TextField, Container, Grid } from "@mui/material";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import SearchItem from "../../components/searchitem/SearchItem";
+import useFetch from "../../hooks/useFetch";
 
 const List = () => {
-  //useLocation hook to access location state passed via the router (navigation)
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state?.destination || '');// // Default state from location or empty string
-  const [checkInDate, setCheckInDate] = useState(location.state?.date?.[0]?.startDate || ''); // Default check-in date
-  const [checkOutDate, setCheckOutDate] = useState(location.state?.date?.[0]?.endDate || '');// Default check-out date
-  // Function to handle changes in the check-in and check-out dates
-  const handleDateChange = (e) => {
-    const { name, value } = e.target;//get the name and value from the target ,
-    if (name === "checkInDate") {
-      setCheckInDate(value);
-    } else if (name === "checkOutDate") {
-      setCheckOutDate(value);
-    }
+  const [destination, setDestination] = useState(location.state.destination || "");
+  const [dates, setDates] = useState(location.state.dates || []);
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState(undefined);
+
+  const { data, loading, error, reFetch } = useFetch(
+    `http://localhost:5500/api/hotels?city=${destination}&min=${min || 0}&max=${max || 10000}`
+  );
+
+  const handleSearch = () => {
+    console.log("Fetching data...");
+    reFetch();
   };
 
-  const handleFilter = () => {
-    // Implement filter logic here
-    console.log("Filtering with:", { destination, checkInDate, checkOutDate });
-  };
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <Box>
@@ -33,56 +33,52 @@ const List = () => {
       <Container maxWidth="lg">
         <Grid container spacing={3} sx={{ mt: 2 }}>
           <Grid item xs={12} md={3}>
-            <Box sx={{ p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
-              <Box sx={{ mb: 2 }}>
-                <TextField
-                  name="destination"
-                  label="Destination"
-                  variant="outlined"
-                  fullWidth
-                  value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  name="checkInDate"
-                  label="Check-in Date"
-                  type="date"
-                  fullWidth
-                  value={checkInDate}
-                  onChange={handleDateChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  sx={{ mb: 2 }}
-                />
-                <TextField
-                  name="checkOutDate"
-                  label="Check-out Date"
-                  type="date"
-                  fullWidth
-                  value={checkOutDate}
-                  onChange={handleDateChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  sx={{ mb: 2 }}
-                />
-                <Button 
-                  variant="contained" 
-                  color="primary" 
-                  fullWidth 
-                  onClick={handleFilter}
-                >
-                  Apply Filter
-                </Button>
-              </Box>
+            <Box sx={{ p: 2, bgcolor: "#f5f5f5", borderRadius: 1 }}>
+              <TextField
+                name="destination"
+                label="Destination"
+                variant="outlined"
+                fullWidth
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                name="minPrice"
+                label="Min Price"
+                type="number"
+                fullWidth
+                onChange={(e) => setMin(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <TextField
+                name="maxPrice"
+                label="Max Price"
+                type="number"
+                fullWidth
+                onChange={(e) => setMax(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={handleSearch}
+              >
+                Search
+              </Button>
             </Box>
           </Grid>
           <Grid item xs={12} md={9}>
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+            {loading ? (
+              "Loading..."
+            ) : error ? (
+              "Error loading data"
+            ) : !data || data.length === 0 ? (
+              "No results found"
+            ) : (
+              data.map((item) => <SearchItem item={item} key={item._id} />)
+            )}
           </Grid>
         </Grid>
       </Container>

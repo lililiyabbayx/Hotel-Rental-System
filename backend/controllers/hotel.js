@@ -51,7 +51,7 @@ export const getHotels = async (req, res, next) => {
       ...(featured && { featured: featuredBool }),
       cheapestPrice: {
         $gt: min || 1,
-        $lt: max || 999,
+        $lt: max || 10000,
       },
     };
 
