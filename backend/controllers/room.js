@@ -2,23 +2,24 @@ import Room from "../models/Room.js";
 import Hotel from "../models/Hotel.js";
 import { createError } from "../utils/error.js";
 
-export const createRoom = async (req, res, next) => {
-  const hotelId = req.params.hotelid;
-  const newRoom = new Room(req.body);
+export const createRoom = async (req,res,next) =>{
+    const hotelId=req.params.hotelid;
+    const newRoom=new Room(req.body)
 
-  try {
-    const savedRoom = await newRoom.save();
-    try {
-      await Hotel.findByIdAndUpdate(hotelId, {
-        $push: { rooms: savedRoom._id },
-      });
-    } catch (err) {
-      next(err);
+    try{
+        const savedRoom=await newRoom.save()
+        try{
+            await Hotel.findByIdAndUpdate(hotelId,{$push:{rooms:savedRoom._id}});
+
+        }catch(err){
+            next(err);
+        }
+        res.status(200).json(savedRoom);
+        
+    }catch(err){
+        next(err);
     }
-    res.status(200).json(savedRoom);
-  } catch (err) {
-    next(err);
-  }
+
 };
 export const updateRoom = async (req, res, next) => {
   try {
@@ -54,19 +55,12 @@ export const getRooms = async (req, res) => {
 };
 
 export const deleteRoom = async (req, res, next) => {
-  const hotelId = req.params.hotelid;
-
   try {
     await Room.findByIdAndDelete(req.params.id);
-    try {
-      await Hotel.findByIdAndUpdate(hotelId, {
-        $pull: { rooms: req.$pull._id },
-      });
-    } catch (err) {
-      next(err);
-    }
     res.status(200).json("deleted Room successfully"); //200 ok just send a message
   } catch (err) {
     next(err); //server side 500
   }
 };
+
+
