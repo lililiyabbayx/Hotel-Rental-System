@@ -19,6 +19,7 @@ const RoomSchema = new mongoose.Schema(
       required: true,
     },
     roomNumbers: [{ number: Number, unavailableDates: { type: [Date] } }],
+    availability: { type: Boolean, default: true }, // Add availability field
   },
   { timestamps: true }
 );

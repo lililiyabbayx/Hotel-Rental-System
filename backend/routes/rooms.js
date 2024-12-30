@@ -23,7 +23,7 @@ router.get("/:id", getRoom);
 // get:
 //  all localhost:5500/api/hotels
 //
-router.get("/:id", getRooms);
+router.get("/", getRooms);
 // delete:
 // localhost:5500/api/hotels/675b5691fc25021c925f68ce
 router.delete("/:id", verifyAdmin, deleteRoom);

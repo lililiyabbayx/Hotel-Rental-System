@@ -44,12 +44,12 @@ export const getRoom = async (req, res, next) => {
   }
 };
 
-export const getRooms = async (req, res, next) => {
+export const getRooms = async (req, res) => {
   try {
     const rooms = await Room.find(); //(req.params.id); //find hotel by id
     res.status(200).json(rooms); //200 ok if successfull return hotel
   } catch (err) {
-    next(err); //server side 500
+    res.status(500).json({message:error.message}); //server side 500
   }
 };
 

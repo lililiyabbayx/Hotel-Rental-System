@@ -1,0 +1,50 @@
+.admin-panel {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.admin-panel h1 {
+  text-align: center;
+  color: #333;
+}
+
+.admin-panel form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-panel input,
+.admin-panel textarea {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.admin-panel button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-panel button:hover {
+  background-color: #0056b3;
+}
+
+.admin-panel ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.admin-panel li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
