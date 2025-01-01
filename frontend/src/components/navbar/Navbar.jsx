@@ -16,14 +16,13 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext'; // Assuming you're using context for authentication
 
 const drawerWidth = 240;
-const navItems = [
-  { name: 'Register', path: '/register' },
-  { name: 'Login', path: '/login' }
-];
 
 function Navbar(props) {
+  const { user } = useContext(AuthContext);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -41,18 +40,32 @@ function Navbar(props) {
       </Link>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item.name} disablePadding>
-            <Link
-              to={item.path}
-              style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}
-            >
+        {user ? (
+          <ListItem disablePadding>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               <ListItemButton sx={{ textAlign: 'center' }}>
-                <ListItemText primary={item.name} />
+                <ListItemText primary={`Welcome, ${user.username}`} />
               </ListItemButton>
             </Link>
           </ListItem>
-        ))}
+        ) : (
+          <>
+            <ListItem key="register" disablePadding>
+              <Link to="/register" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ListItemButton sx={{ textAlign: 'center' }}>
+                  <ListItemText primary="Register" />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+            <ListItem key="login" disablePadding>
+              <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ListItemButton sx={{ textAlign: 'center' }}>
+                  <ListItemText primary="Login" />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          </>
+        )}
       </List>
     </Box>
   );
@@ -74,27 +87,26 @@ function Navbar(props) {
             <MenuIcon />
           </IconButton>
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
-            <AcUnitIcon sx={{ fontSize: 50 , color: 'white',mt:2, }} />
-            <Typography 
-              variant="h6"
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
+            <AcUnitIcon sx={{ fontSize: 50, color: 'white', mt: 2 }} />
+            <Typography variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
               PATH way IN
             </Typography>
           </Link>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                style={{ textDecoration: 'none' }}
-              >
-                <Button sx={{ color: '#fff' }}>
-                  {item.name}
-                </Button>
-              </Link>
-            ))}
+            {user ? (
+              <Typography variant="h6" sx={{ color: 'white' }}>
+                Welcome, {user.username}
+              </Typography>
+            ) : (
+              <div>
+                <Link to="/register" style={{ textDecoration: 'none' }}>
+                  <Button sx={{ color: 'white' }}>Register</Button>
+                </Link>
+                <Link to="/login" style={{ textDecoration: 'none' }}>
+                  <Button sx={{ color: 'white' }}>Login</Button>
+                </Link>
+              </div>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
