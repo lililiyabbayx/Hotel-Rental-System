@@ -6,6 +6,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "lucide-react": "^0.468.0",
+    "mongoose": "^8.9.3",
     "openai": "^4.77.3"
   }
 }
