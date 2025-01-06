@@ -15,14 +15,14 @@ const SearchItem = ({ item }) => {
         mb: 2,
       }}
     >
-      {/* Image */}
+    
       <img
         src={item.photos.length > 0 ? item.photos[0] : "default-image.jpg"} // Fallback image if no photos
         alt={item.name}
         style={{ width: 200, height: 200, objectFit: "cover" }}
       />
 
-      {/* Description */}
+  
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1, flex: 2 }}>
         <Typography variant="h6" color="primary">
           {item.name}
@@ -43,18 +43,20 @@ const SearchItem = ({ item }) => {
           </Typography>
         )}
         <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-          Studio Apartment with Air conditioning
+          Free transporation to and from the airport
+
         </Typography>
         <Typography variant="body2">{item.desc}</Typography>
         <Typography variant="body2" sx={{ color: "#008009", fontWeight: "bold" }}>
-          Free cancellation
+          Free Buffet Breakfast
         </Typography>
         <Typography variant="body2" sx={{ color: "#008009" }}>
-          You can cancel later, so lock in this great price today!
+          10% discount on all food and drinks for Reservations made through the website!
+
         </Typography>
       </Box>
 
-      {/* Details */}
+    
       <Box sx={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
         {/* Rating */}
         {item.rating && (
@@ -65,10 +67,10 @@ const SearchItem = ({ item }) => {
             <Rating value={item.rating} readOnly precision={0.1} />
           </Box>
         )}
-        {/* Pricing and Availability */}
+    
         <Box sx={{ textAlign: "right", display: "flex", flexDirection: "column", gap: 1 }}>
           <Typography variant="h6" sx={{ fontSize: "24px" }}>
-            ${item.cheapestPrice}
+            {item.cheapestPrice}/-TK
           </Typography>
           <Typography variant="body2" sx={{ color: "gray" }}>
             Includes taxes and fees
